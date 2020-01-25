@@ -5,7 +5,7 @@ function useForm() {
   const [form, setForm] = useState();
 
   function setInitialValues(initialValues) {
-    setForm({ __dirtyFields: [], ...initialValues });
+    setForm({ ...initialValues, __dirtyFields: [] });
   }
 
   function onFieldChange(field, value) {

@@ -1,0 +1,13 @@
+.toasts {
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  top: 5rem;
+  right: 2rem;
+  width: 256px;
+  z-index: 40;
+}
+
+.toast {
+  margin-bottom: 1rem;
+}

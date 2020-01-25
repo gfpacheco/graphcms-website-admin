@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { useApolloClient } from '@apollo/react-hooks';
 import { gql } from 'apollo-boost';
 import useSchema from './useSchema';
+import useToast from './useToast';
 
 const updatePageMutation = gql`
   mutation updatePage($id: ID!, $data: PageUpdateInput!) {
@@ -19,6 +20,7 @@ function useUpdatePage(id) {
   const [state, setState] = useState({ loading: false, error: undefined });
   const client = useApolloClient();
   const { schema } = useSchema();
+  const { pushToast } = useToast();
 
   async function updatePage(form) {
     setState({ loading: true, error: undefined });
@@ -62,6 +64,7 @@ function useUpdatePage(id) {
       }
 
       setState({ loading: false, error: undefined });
+      pushToast('success', 'Page updated!');
     } catch (error) {
       console.error(error);
       setState({ loading: false, error });

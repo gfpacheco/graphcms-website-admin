@@ -33,17 +33,28 @@ function PageEdit({ pageId }) {
 
   async function handleSubmit(event) {
     event.preventDefault();
-    updatePage(form);
+    await updatePage(form);
+    setInitialData(form);
   }
 
   const fields = schema.Page.fields.filter(field => field.type.name);
 
   return (
-    <div className="container">
-      <h1 className="title">Edit page {loadingPage && <LoadingIndicator />}</h1>
+    <form className="container" onSubmit={handleSubmit}>
+      <div className="level">
+        <div className="level-left">
+          <h1 className="title">Edit page {loadingPage && <LoadingIndicator />}</h1>
+        </div>
+        <button
+          className={`level-right button is-link ${loadingSave ? 'is-loading' : ''}`}
+          disabled={!form || form.__dirtyFields.length === 0}
+        >
+          Save
+        </button>
+      </div>
       <ErrorIndicator error={pageError || modulesError || saveError} />
       {form && (
-        <form onSubmit={handleSubmit}>
+        <>
           {fields.map(field => {
             const Field = fieldComponents[field.type.name];
 
@@ -66,19 +77,18 @@ function PageEdit({ pageId }) {
                 onChange={value => onFieldChange(`modules[${index}]`, value)}
               />
             ))}
-          <div className="field">
-            <div className="control">
-              <button
-                className={`button is-link ${loadingSave ? 'is-loading' : ''}`}
-                disabled={form.__dirtyFields.length === 0}
-              >
-                Save
-              </button>
-            </div>
+          <div className="field level">
+            <div />
+            <button
+              className={`level-right button is-link ${loadingSave ? 'is-loading' : ''}`}
+              disabled={form.__dirtyFields.length === 0}
+            >
+              Save
+            </button>
           </div>
-        </form>
+        </>
       )}
-    </div>
+    </form>
   );
 }
 

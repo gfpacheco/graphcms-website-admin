@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import useSchema from '../../hooks/useSchema';
+import ToastProvider from '../Toasts/ToastProvider';
 import PageEdit from '../PageEdit';
 import PageList from '../PageList';
 import ErrorIndicator from '../ErrorIndicator';
@@ -16,7 +17,7 @@ function App() {
       </p>
     </section>
   ) : (
-    <>
+    <ToastProvider>
       <header className="navbar is-primary">
         <div className="container">
           <div className="navbar-brand">
@@ -30,7 +31,7 @@ function App() {
       <main className="section">
         {pageId ? <PageEdit pageId={pageId} /> : <PageList onPageClick={setPageId} />}
       </main>
-    </>
+    </ToastProvider>
   );
 }
 
