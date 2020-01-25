@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import ApolloClient from 'apollo-boost';
 import { ApolloProvider } from '@apollo/react-hooks';
 import './index.scss';
-import App from './App';
+import App from './components/App';
 
 const { GRAPHQL_URL } = process.env;
 

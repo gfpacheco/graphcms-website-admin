@@ -1,0 +1,17 @@
+@import "~bulma/sass/utilities/_all";
+
+.loading-indicator {
+  display: inline-block;
+  width: 32px;
+  height: 32px;
+  border: 4px solid $primary;
+  border-radius: 16px;
+  border-top-color: transparent;
+  animation: spin 1s infinite linear;
+}
+
+@keyframes spin {
+  100% {
+    transform: rotate(360deg);
+  }
+}
