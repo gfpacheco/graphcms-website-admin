@@ -13,19 +13,20 @@ function useUploadFile() {
     try {
       setState({ loading: true, error: undefined });
 
+      const fileName = file.name;
       const body = new FormData();
       body.append('fileUpload', file);
 
-      const response = await fetch(`${baseUrl}/${uuid()}_${file.name}`, {
+      const response = await fetch(`${baseUrl}/${uuid()}_${fileName}`, {
         method: 'POST',
         body,
       });
 
-      const { type, url, size } = await response.json();
+      const { type, size, url } = await response.json();
 
       setState({ loading: false, error: undefined });
 
-      return { mimeType: type, url, size };
+      return { fileName, mimeType: type, size, url };
     } catch (error) {
       console.error(error);
       setState({ loading: false, error });

@@ -26,28 +26,53 @@ function useUpdatePage(id) {
     setState({ loading: true, error: undefined });
 
     try {
-      await form.__dirtyFields.map(field => {
+      await form.__dirtyFields.map(async field => {
         if (field.startsWith('modules')) {
           const module = get(form, field);
-          const fieldsNames = schema[module.__typename].fields.map(field => field.name);
+          const fields = schema[module.__typename].fields;
+          const fieldsNames = fields.map(field => field.name);
           const data = pick(module, fieldsNames);
 
+          fields.forEach(field => {
+            if (field.type.name === 'Asset') {
+              if (data[field.name]) {
+                if (data[field.name].id) {
+                  delete data[field.name];
+                } else {
+                  const { fileName, mimeType, url, size } = data[field.name];
+
+                  data[field.name] = {
+                    create: {
+                      fileName,
+                      mimeType,
+                      size,
+                      handle: url.substring(url.lastIndexOf('/')),
+                    },
+                  };
+                }
+              } else {
+                data[field.name] = { delete: true };
+              }
+            }
+          });
+
+          const responseFields = fields.map(field =>
+            field.type.name === 'Asset' ? `${field.name} { id, mimeType, url }` : field.name,
+          );
           const mutation = gql`
             mutation update${module.__typename}($id: ID!, $data: ${module.__typename}UpdateInput!) {
               update${module.__typename} (where: { id: $id }, data: $data) {
                 id
-                ${fieldsNames.join(' ')}
+                ${responseFields.join(' ')}
               }
             }
           `;
 
-          return client.mutate({
+          await client.mutate({
             mutation,
             variables: { id: module.id, data },
           });
         }
-
-        return undefined;
       });
 
       if (form.__dirtyFields.length > 1 || !form.__dirtyFields[0].startsWith('modules')) {

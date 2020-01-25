@@ -3,7 +3,8 @@
   flex-direction: column;
   position: fixed;
   top: 5rem;
-  right: 2rem;
+  left: 50%;
+  margin-left: -128px;
   width: 256px;
   z-index: 40;
 }
