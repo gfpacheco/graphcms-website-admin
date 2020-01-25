@@ -8,6 +8,7 @@ import useModules from '../../hooks/useModules';
 import fieldComponents from '../fields';
 import FieldModule from '../fields/FieldModule';
 import useUpdatePage from '../../hooks/useUpdatePage';
+import './PageEdit.scss';
 
 function PageEdit({ pageId }) {
   const { schema } = useSchema();
@@ -40,7 +41,7 @@ function PageEdit({ pageId }) {
   const fields = schema.Page.fields.filter(field => field.type.name);
 
   return (
-    <form className="container" onSubmit={handleSubmit}>
+    <form className="page-edit container" onSubmit={handleSubmit}>
       <div className="level">
         <div className="level-left">
           <h1 className="title">Edit page {loadingPage && <LoadingIndicator />}</h1>
@@ -79,7 +80,7 @@ function PageEdit({ pageId }) {
                 onChange={value => onFieldChange(`modules[${index}]`, value)}
               />
             ))}
-          <div className="field level">
+          <div className="bottom-level field level">
             <div />
             <button
               className={`level-right button is-link ${loadingSave ? 'is-loading' : ''}`}
