@@ -1,11 +1,16 @@
 import React from 'react';
 
-function FieldString({ field, value }) {
+function FieldString({ field, value, onChange }) {
   return (
     <div className="field">
-      <label className="label">{field.name}</label>
+      <label className="label is-capitalized">{field.name}</label>
       <div className="control">
-        <input className="input" type="text" value={value} />
+        <input
+          className="input"
+          type="text"
+          value={value}
+          onChange={event => onChange(event.target.value)}
+        />
       </div>
     </div>
   );
