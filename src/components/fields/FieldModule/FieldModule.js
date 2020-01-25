@@ -11,7 +11,7 @@ function FieldModule({ module, type, onChange }) {
   }
 
   return (
-    <div className="field-module">
+    <div className="field-module field">
       <h2 className="title is-4">{module.__typename}</h2>
       {type.fields.map(field => {
         const Field = fieldComponents[field.type.name];

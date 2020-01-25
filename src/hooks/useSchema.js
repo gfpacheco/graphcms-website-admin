@@ -31,7 +31,7 @@ function useSchema() {
   if (data) {
     data.__schema.types.forEach(type => {
       if (type.name === 'Page') {
-        schema.page = filterFields(type);
+        schema.Page = filterFields(type);
       } else if (type.name.endsWith('Module')) {
         schema[type.name] = filterFields(type);
       }
