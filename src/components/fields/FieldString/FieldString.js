@@ -8,14 +8,14 @@ function FieldString({ field, value, onChange }) {
         {field.name === 'description' ? (
           <textarea
             className="textarea"
-            value={value}
+            value={value || ''}
             onChange={event => onChange(event.target.value)}
           />
         ) : (
           <input
             className="input"
             type="text"
-            value={value}
+            value={value || ''}
             onChange={event => onChange(event.target.value)}
           />
         )}

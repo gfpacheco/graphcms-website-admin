@@ -6,11 +6,17 @@ const modulesQuery = gql`
     fooModules(where: { id_in: $ids }) {
       id
       text
+      image {
+        id
+        mimeType
+        url
+      }
     }
 
     barModules(where: { id_in: $ids }) {
       id
       text
+      description
     }
   }
 `;
