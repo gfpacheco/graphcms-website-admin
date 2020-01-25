@@ -1,4 +1,5 @@
 import React from 'react';
+import { useParams } from 'react-router-dom';
 import LoadingIndicator from '../LoadingIndicator';
 import ErrorIndicator from '../ErrorIndicator';
 import useSchema from '../../hooks/useSchema';
@@ -10,7 +11,8 @@ import FieldModule from '../fields/FieldModule';
 import useUpdatePage from '../../hooks/useUpdatePage';
 import './PageEdit.scss';
 
-function PageEdit({ pageId }) {
+function PageEdit() {
+  const { pageId } = useParams();
   const { schema } = useSchema();
   const [form, setInitialData, onFieldChange] = useForm();
 

@@ -1,6 +1,7 @@
 import React from 'react';
 import { gql } from 'apollo-boost';
 import { useQuery } from '@apollo/react-hooks';
+import { useHistory } from 'react-router-dom';
 import LoadingIndicator from '../LoadingIndicator';
 import ErrorIndicator from '../ErrorIndicator';
 import './PageList.scss';
@@ -15,8 +16,9 @@ const pagesQuery = gql`
   }
 `;
 
-function PageList({ onPageClick }) {
+function PageList() {
   const { loading, error, data } = useQuery(pagesQuery);
+  const history = useHistory();
 
   return (
     <div className="page-list container">
@@ -32,7 +34,7 @@ function PageList({ onPageClick }) {
           </thead>
           <tbody>
             {data.pages.map(page => (
-              <tr key={page.id} onClick={() => onPageClick(page.id)}>
+              <tr key={page.id} onClick={() => history.push(`/${page.id}`)}>
                 <td>{page.title}</td>
                 <td>{new Date(page.createdAt).toLocaleString()}</td>
               </tr>

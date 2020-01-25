@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { BrowserRouter as Router, Link, Switch, Route } from 'react-router-dom';
 import useSchema from '../../hooks/useSchema';
 import ToastProvider from '../Toasts/ToastProvider';
 import PageEdit from '../PageEdit';
@@ -8,7 +9,6 @@ import LoadingIndicator from '../LoadingIndicator';
 
 function App() {
   const { loading, error } = useSchema();
-  const [pageId, setPageId] = useState();
 
   return loading ? (
     <section className="section">
@@ -18,19 +18,28 @@ function App() {
     </section>
   ) : (
     <ToastProvider>
-      <header className="navbar is-primary">
-        <div className="container">
-          <div className="navbar-brand">
-            <a className="navbar-item title is-5" href="/">
-              EP Admin
-            </a>
+      <Router>
+        <header className="navbar is-primary">
+          <div className="container">
+            <div className="navbar-brand">
+              <Link to="/" className="navbar-item title is-5" href="/">
+                EP Admin
+              </Link>
+            </div>
           </div>
-        </div>
-      </header>
-      {error && <ErrorIndicator error={error} />}
-      <main className="section">
-        {pageId ? <PageEdit pageId={pageId} /> : <PageList onPageClick={setPageId} />}
-      </main>
+        </header>
+        {error && <ErrorIndicator error={error} />}
+        <main className="section">
+          <Switch>
+            <Route path="/:pageId">
+              <PageEdit />
+            </Route>
+            <Route path="/">
+              <PageList />
+            </Route>
+          </Switch>
+        </main>
+      </Router>
     </ToastProvider>
   );
 }
