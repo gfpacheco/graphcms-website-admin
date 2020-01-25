@@ -1,7 +1,8 @@
 import React from 'react';
-import LoadingIndicator from '../LoadingIndicator';
 import { gql } from 'apollo-boost';
 import { useQuery } from '@apollo/react-hooks';
+import LoadingIndicator from '../LoadingIndicator';
+import ErrorIndicator from '../ErrorIndicator';
 import './PageList.scss';
 
 const pagesQuery = gql`
@@ -18,9 +19,9 @@ function PageList({ onPageClick }) {
   const { loading, error, data } = useQuery(pagesQuery);
 
   return (
-    <div className="container page-list">
+    <div className="page-list container">
       <h1 className="title">Pages {loading && <LoadingIndicator />}</h1>
-      {error && <p className="has-text-error">{error}</p>}
+      <ErrorIndicator error={error} />
       {data && (
         <table className="table is-fullwidth is-hoverable">
           <thead>
