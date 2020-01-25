@@ -56,15 +56,17 @@ function PageEdit({ pageId }) {
       {form && (
         <>
           {fields.map(field => {
-            const Field = fieldComponents[field.type.name];
+            const Field = fieldComponents[field.type.name] || null;
 
             return (
-              <Field
-                key={field.name}
-                field={field}
-                value={form[field.name]}
-                onChange={value => onFieldChange(field.name, value)}
-              />
+              Field && (
+                <Field
+                  key={field.name}
+                  field={field}
+                  value={form[field.name]}
+                  onChange={value => onFieldChange(field.name, value)}
+                />
+              )
             );
           })}
           {loadingModules && <LoadingIndicator />}

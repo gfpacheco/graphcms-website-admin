@@ -14,15 +14,17 @@ function FieldModule({ module, type, onChange }) {
     <div className="field-module field">
       <h2 className="title is-4">{module.__typename}</h2>
       {type.fields.map(field => {
-        const Field = fieldComponents[field.type.name];
+        const Field = fieldComponents[field.type.name] || null;
 
         return (
-          <Field
-            key={field.name}
-            field={field}
-            value={module[field.name]}
-            onChange={value => onFieldChange(field.name, value)}
-          />
+          Field && (
+            <Field
+              key={field.name}
+              field={field}
+              value={module[field.name]}
+              onChange={value => onFieldChange(field.name, value)}
+            />
+          )
         );
       })}
     </div>
