@@ -6,6 +6,8 @@ import { gql } from 'apollo-boost';
 import useSchema from './useSchema';
 import useToast from './useToast';
 
+const modulesFieldRegex = /^modules./;
+
 const updatePageMutation = gql`
   mutation updatePage($id: ID!, $data: PageUpdateInput!) {
     updatePage(where: { id: $id }, data: $data) {
@@ -27,7 +29,7 @@ function useUpdatePage(id) {
 
     try {
       await form.__dirtyFields.map(async field => {
-        if (field.startsWith('modules')) {
+        if (field.match(modulesFieldRegex)) {
           const module = get(form, field);
           const fields = schema[module.__typename].fields;
           const fieldsNames = fields.map(field => field.name);
@@ -75,15 +77,20 @@ function useUpdatePage(id) {
         }
       });
 
-      if (form.__dirtyFields.length > 1 || !form.__dirtyFields[0].startsWith('modules')) {
+      const shouldUpdatePage = form.__dirtyFields.some(field => !field.match(modulesFieldRegex));
+
+      if (shouldUpdatePage) {
         await client.mutate({
           mutation: updatePageMutation,
           variables: {
             id,
-            data: pick(
-              form,
-              schema.Page.fields.map(field => field.name),
-            ),
+            data: {
+              ...pick(
+                form,
+                schema.Page.fields.map(field => field.name),
+              ),
+              modulesIds: { set: form.modules.map(module => module.id) },
+            },
           },
         });
       }

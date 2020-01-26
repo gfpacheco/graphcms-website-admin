@@ -1,14 +1,15 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
+import arrayMove from 'array-move';
 import LoadingIndicator from '../LoadingIndicator';
 import ErrorIndicator from '../ErrorIndicator';
 import useSchema from '../../hooks/useSchema';
 import useForm from '../../hooks/useForm';
 import usePage from '../../hooks/usePage';
 import useModules from '../../hooks/useModules';
-import fieldComponents from '../fields';
-import FieldModule from '../fields/FieldModule';
 import useUpdatePage from '../../hooks/useUpdatePage';
+import fieldComponents from '../fields';
+import ModulesEdit from './ModulesEdit';
 import './PageEdit.scss';
 
 function PageEdit() {
@@ -34,6 +35,11 @@ function PageEdit() {
 
   const { loading: loadingSave, error: saveError, updatePage } = useUpdatePage(pageId);
 
+  function handleModuleSort({ oldIndex, newIndex }) {
+    const newModules = [...form.modules];
+    onFieldChange('modules', arrayMove(newModules, oldIndex, newIndex));
+  }
+
   async function handleSubmit(event) {
     event.preventDefault();
     await updatePage(form);
@@ -43,22 +49,22 @@ function PageEdit() {
   const fields = schema.Page.fields.filter(field => field.type.name);
 
   return (
-    <form className="page-edit container" onSubmit={handleSubmit}>
-      <div className="level">
-        <div className="level-left">
-          <h1 className="title">Edit page {loadingPage && <LoadingIndicator />}</h1>
+    <form className="page-edit" onSubmit={handleSubmit}>
+      <div className="page-edit-header container">
+        <div className="level">
+          <div className="level-left">
+            <h1 className="title">Edit page {loadingPage && <LoadingIndicator />}</h1>
+          </div>
+          <button
+            className={`level-right button is-link ${loadingSave ? 'is-loading' : ''}`}
+            disabled={!form || form.__dirtyFields.length === 0}
+          >
+            Save
+          </button>
         </div>
-        <button
-          className={`level-right button is-link ${loadingSave ? 'is-loading' : ''}`}
-          disabled={!form || form.__dirtyFields.length === 0}
-        >
-          Save
-        </button>
-      </div>
-      <ErrorIndicator error={pageError || modulesError || saveError} />
-      {form && (
-        <>
-          {fields.map(field => {
+        <ErrorIndicator error={pageError || modulesError || saveError} />
+        {form &&
+          fields.map(field => {
             const Field = fieldComponents[field.type.name] || null;
 
             return (
@@ -72,20 +78,21 @@ function PageEdit() {
               )
             );
           })}
+      </div>
+      {form && (
+        <>
           {loadingModules && <LoadingIndicator />}
-          {form.modules &&
-            form.modules.map((module, index) => (
-              <FieldModule
-                key={module.id}
-                module={module}
-                type={schema[module.__typename]}
-                onChange={value => onFieldChange(`modules[${index}]`, value)}
-              />
-            ))}
-          <div className="bottom-level field level">
+          {form.modules && (
+            <ModulesEdit
+              modules={form.modules}
+              onFieldChange={onFieldChange}
+              onSortEnd={handleModuleSort}
+            />
+          )}
+          <div className="buttons container level">
             <div />
             <button
-              className={`level-right button is-link ${loadingSave ? 'is-loading' : ''}`}
+              className={`button is-link ${loadingSave ? 'is-loading' : ''}`}
               disabled={form.__dirtyFields.length === 0}
             >
               Save

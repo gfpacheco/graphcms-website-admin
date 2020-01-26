@@ -1,3 +1,18 @@
+@import "~bulma/sass/utilities/_all";
+
 .field-module {
-  margin-top: 4rem;
+  padding: 2rem 0;
+  background-color: $white;
+
+  .drag-handle {
+    display: none;
+  }
+
+  &:hover {
+    background-color: $white-ter;
+
+    .drag-handle {
+      display: inline-block;
+    }
+  }
 }
