@@ -96,12 +96,10 @@ function PageEdit() {
       <div className="page-edit-header container">
         <div className="level">
           <div className="level-left">
-            <h1 className="title">
-              Edit page {(loadingPage || loadingModules) && <LoadingIndicator />}
-            </h1>
+            <h1 className="title">Edit page {loadingPage && <LoadingIndicator />}</h1>
           </div>
           <button
-            className={`level-right button is-link ${loadingSave ? 'is-loading' : ''}`}
+            className={`level-right button is-success ${loadingSave ? 'is-loading' : ''}`}
             disabled={!form || form.__dirtyFields.length === 0}
           >
             Save
@@ -126,6 +124,11 @@ function PageEdit() {
       </div>
       {form && (
         <>
+          {loadingModules && (
+            <div className="has-text-centered">
+              <LoadingIndicator />
+            </div>
+          )}
           {form.modules && (
             <ModulesEdit
               modules={form.modules}
@@ -139,7 +142,7 @@ function PageEdit() {
           <div className="buttons container level">
             <div />
             <button
-              className={`button is-link ${loadingSave ? 'is-loading' : ''}`}
+              className={`button is-success ${loadingSave ? 'is-loading' : ''}`}
               disabled={form.__dirtyFields.length === 0}
             >
               Save

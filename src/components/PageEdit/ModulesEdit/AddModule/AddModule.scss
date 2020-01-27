@@ -40,11 +40,11 @@
     cursor: pointer;
 
     &:hover svg {
-      fill: $link-dark;
+      fill: $success-dark;
     }
   }
 
   svg {
-    fill: $link;
+    fill: $success;
   }
 }

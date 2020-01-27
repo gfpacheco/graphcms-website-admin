@@ -19,7 +19,7 @@ function App() {
   ) : (
     <ToastProvider>
       <Router>
-        <header className="navbar is-primary">
+        <header className="navbar is-link">
           <div className="container">
             <div className="navbar-brand">
               <Link to="/" className="navbar-item title is-5" href="/">
