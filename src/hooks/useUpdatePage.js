@@ -31,7 +31,7 @@ function useUpdatePage(id) {
       await form.__dirtyFields.map(async field => {
         if (field.match(modulesFieldRegex)) {
           const module = get(form, field);
-          const fields = schema[module.__typename].fields;
+          const { fields, responseFields } = schema[module.__typename];
           const fieldsNames = fields.map(field => field.name);
           const data = pick(module, fieldsNames);
 
@@ -58,9 +58,6 @@ function useUpdatePage(id) {
             }
           });
 
-          const responseFields = fields.map(field =>
-            field.type.name === 'Asset' ? `${field.name} { id, mimeType, url }` : field.name,
-          );
           const mutation = gql`
             mutation update${module.__typename}($id: ID!, $data: ${module.__typename}UpdateInput!) {
               update${module.__typename} (where: { id: $id }, data: $data) {

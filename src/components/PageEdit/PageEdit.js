@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
+import flatten from 'lodash.flatten';
 import arrayMove from 'array-move';
 import LoadingIndicator from '../LoadingIndicator';
 import ErrorIndicator from '../ErrorIndicator';
@@ -30,10 +31,8 @@ function PageEdit() {
     onCompleted: data =>
       setInitialData({
         ...form,
-        modules: form.modulesIds.map(
-          id =>
-            data.fooModules.find(module => module.id === id) ||
-            data.barModules.find(module => module.id === id),
+        modules: form.modulesIds.map(id =>
+          flatten(Object.values(data)).find(module => module.id === id),
         ),
       }),
   });

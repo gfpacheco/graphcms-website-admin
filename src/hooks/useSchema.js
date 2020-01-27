@@ -17,10 +17,18 @@ const schemaQuery = gql`
   }
 `;
 
-function filterFields(type) {
+function prepareType(type) {
+  const fields = type.fields.filter(field => field.type.name);
+
   return {
     ...type,
-    fields: type.fields.filter(field => field.type.name),
+    fields,
+    responseFields: [
+      'id',
+      ...fields.map(field =>
+        field.type.name === 'Asset' ? `${field.name} { id, mimeType, url }` : field.name,
+      ),
+    ].join(' '),
   };
 }
 
@@ -31,9 +39,9 @@ function useSchema() {
   if (data) {
     data.__schema.types.forEach(type => {
       if (type.name === 'Page') {
-        schema.Page = filterFields(type);
+        schema.Page = prepareType(type);
       } else if (type.name.endsWith('Module')) {
-        schema[type.name] = filterFields(type);
+        schema[type.name] = prepareType(type);
       }
     });
   }
