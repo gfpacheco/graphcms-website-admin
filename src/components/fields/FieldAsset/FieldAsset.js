@@ -34,7 +34,7 @@ function FieldAsset({ field, value, onChange }) {
             <div className="field">
               <button
                 type="button"
-                className={`level-item button is-link ${loading ? 'is-loading' : ''}`}
+                className={`button is-link ${loading ? 'is-loading' : ''}`}
                 onClick={() => inputRef.current.click()}
                 disabled={loading}
               >
@@ -45,7 +45,7 @@ function FieldAsset({ field, value, onChange }) {
               <div className="field">
                 <button
                   type="button"
-                  className="level-item button"
+                  className="button"
                   onClick={() => onChange(null)}
                   disabled={loading}
                 >

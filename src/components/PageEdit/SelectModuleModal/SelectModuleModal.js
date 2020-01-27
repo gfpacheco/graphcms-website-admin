@@ -16,7 +16,7 @@ function SelectModuleModal({ isActive, onModuleSelected, loading, onClose }) {
       <div className="modal-background"></div>
       <div className="modal-content box is-paddingless">
         <nav className="panel">
-          <div className="panel-heading level is-marginless">
+          <div className="panel-heading level is-mobile is-marginless">
             <div className="level-left">
               <span className="level-item">Select a module to add</span>
               <span className="level-item">{loading && <LoadingIndicator />}</span>

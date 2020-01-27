@@ -2,6 +2,8 @@
 
 .field-asset {
   .image {
-    background-color: $grey-lighter;
+    background-color: $grey-lightest;
+    border: 1px solid $grey-lighter;
+    border-radius: $radius;
   }
 }

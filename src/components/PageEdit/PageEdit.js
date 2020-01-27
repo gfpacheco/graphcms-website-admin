@@ -94,7 +94,7 @@ function PageEdit() {
   return (
     <form className="page-edit" onSubmit={handleSubmit}>
       <div className="page-edit-header container">
-        <div className="level">
+        <div className="level is-mobile">
           <div className="level-left">
             <h1 className="title">Edit page {loadingPage && <LoadingIndicator />}</h1>
           </div>

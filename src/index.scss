@@ -20,3 +20,15 @@ $section-padding: 3rem 0;
 
 @import "~bulma/sass/utilities/_all";
 @import "~bulma";
+
+.container {
+  margin: 0 1rem;
+
+  @include desktop {
+    margin: 0 auto;
+  }
+}
+
+.navbar .container {
+  width: auto;
+}

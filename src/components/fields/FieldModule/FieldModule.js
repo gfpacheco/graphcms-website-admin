@@ -21,7 +21,7 @@ function FieldModule({ module, type, onChange, onRemove }) {
   return (
     <div className="field-module">
       <div className="container">
-        <div className="level">
+        <div className="level is-mobile">
           <h2 className="title is-4 is-marginless">{module.__typename}</h2>
           <div className="level-right">
             <TrashCan onClick={handleTrashCanClick} />
