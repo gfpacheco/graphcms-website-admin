@@ -62,7 +62,7 @@ function useUpdatePage(id) {
             mutation update${module.__typename}($id: ID!, $data: ${module.__typename}UpdateInput!) {
               update${module.__typename} (where: { id: $id }, data: $data) {
                 id
-                ${responseFields.join(' ')}
+                ${responseFields}
               }
             }
           `;

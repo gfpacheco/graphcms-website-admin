@@ -13,16 +13,13 @@ function useCreateModule() {
 
     try {
       const mutationName = `create${moduleName}`;
-      const fields = schema[moduleName].fields;
-      const responseFields = fields.map(field =>
-        field.type.name === 'Asset' ? `${field.name} { id, mimeType, url }` : field.name,
-      );
+      const { responseFields } = schema[moduleName];
 
       const mutation = gql`
         mutation ${mutationName} {
-          ${mutationName}(data: {}) {
+          ${mutationName}(data: { status: PUBLISHED }) {
             id
-            ${responseFields.join(' ')}
+            ${responseFields}
           }
         }
       `;
