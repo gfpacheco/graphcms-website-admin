@@ -1,8 +1,9 @@
 import React from 'react';
+import { ReactComponent as Handle } from './handle.svg';
 import './DragHandle.scss';
 
 function DragHandle() {
-  return <span className="drag-handle title is-4 has-text-grey">::</span>;
+  return <Handle className="drag-handle" />;
 }
 
 export default DragHandle;

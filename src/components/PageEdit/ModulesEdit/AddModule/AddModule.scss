@@ -1,0 +1,50 @@
+@import "~bulma/sass/utilities/_all";
+
+.add-module {
+  position: relative;
+  height: 1px;
+  z-index: 30;
+
+  div {
+    position: absolute;
+    top: -2rem;
+    left: 0;
+    right: 0;
+    height: 1px;
+    padding: 2rem 0;
+    box-sizing: content-box;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    * {
+      display: none;
+    }
+
+    &:hover * {
+      display: block;
+    }
+  }
+
+  hr {
+    position: absolute;
+    top: 2rem;
+    left: 0;
+    right: 0;
+  }
+
+  button {
+    position: relative;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+
+    &:hover svg {
+      fill: $link-dark;
+    }
+  }
+
+  svg {
+    fill: $link;
+  }
+}

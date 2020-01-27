@@ -1,0 +1,17 @@
+@import "~bulma/sass/utilities/_all";
+
+.trash-can {
+  background-color: transparent;
+  border: none;
+  padding: 0;
+  height: 24px;
+  cursor: pointer;
+
+  svg {
+    fill: $grey;
+  }
+
+  &:hover svg {
+    fill: $danger-dark;
+  }
+}

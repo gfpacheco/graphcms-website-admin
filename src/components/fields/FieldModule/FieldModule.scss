@@ -4,13 +4,16 @@
   padding: 2rem 0;
   background-color: $white;
 
+  .trash-can,
   .drag-handle {
     display: none;
+    margin-left: 1rem;
   }
 
   &:hover {
     background-color: $white-ter;
 
+    .trash-can,
     .drag-handle {
       display: inline-block;
     }

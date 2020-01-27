@@ -1,0 +1,10 @@
+@import "~bulma/sass/utilities/_all";
+
+.drag-handle {
+  cursor: move;
+  fill: $grey;
+
+  &:hover {
+    fill: $link-dark;
+  }
+}
