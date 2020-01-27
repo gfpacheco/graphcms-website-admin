@@ -42,13 +42,17 @@ function useUpdatePage(id) {
                   delete data[field.name];
                 } else {
                   const { fileName, mimeType, url, size } = data[field.name];
+                  const assetData = {
+                    fileName,
+                    mimeType,
+                    size,
+                    handle: url.substring(url.lastIndexOf('/')),
+                  };
 
                   data[field.name] = {
-                    create: {
-                      fileName,
-                      mimeType,
-                      size,
-                      handle: url.substring(url.lastIndexOf('/')),
+                    upsert: {
+                      create: assetData,
+                      update: assetData,
                     },
                   };
                 }
