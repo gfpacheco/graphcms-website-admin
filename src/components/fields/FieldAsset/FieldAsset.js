@@ -24,7 +24,7 @@ function FieldAsset({ field, value, onChange }) {
       <label className="label is-capitalized">{field.name}</label>
       <div className="media">
         <figure className="media-left">
-          <p className="image is-128x128">
+          <p className="image is-128x128 is-cover">
             {value && <img src={value.url} alt={value.fileName} />}
           </p>
         </figure>
